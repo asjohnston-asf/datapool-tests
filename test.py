@@ -3,7 +3,8 @@ import requests
 
 
 tests = [
-  { # broken
+  {
+    'name': 'forbidden data',
     'unauthenticated_response': 403,
     'authenticated_response': 403,
     'restricted_response': 403,
@@ -12,7 +13,8 @@ tests = [
       '/archive/datasets/rgps/data/Eulerian/2010_12/cenarc_1012.h5.zip',
     ],
   },
-  { # restricted
+  {
+    'name': 'restricted data',
     'unauthenticated_response': 302,
     'authenticated_response': 401,
     'restricted_response': 307,
@@ -27,7 +29,8 @@ tests = [
       '/THUMBNAIL/R1/R1_01266_ST5_F154_THUMBNAIL.jpg',
     ],
   },
-  { #protected
+  {
+    'name': 'protected data',
     'unauthenticated_response': 302,
     'authenticated_response': 307,
     'restricted_response': 307,
@@ -112,7 +115,8 @@ tests = [
       '/STOKES/UA/ChinaL_35701_08036_000_080724_L090_CX_01_stokes.zip',
     ],
   },
-  { # public
+  {
+    'name': 'public data',
     'unauthenticated_response': 307,
     'authenticated_response': 307,
     'restricted_response': 307,
@@ -137,6 +141,32 @@ tests = [
 ]
 
 
+SESSION = requests.Session()
+
+
+def run_test(url, cookie, expected_response):
+    response = SESSION.get(url, cookies=cookie, allow_redirects=False)
+    if response.status_code != expected_response:
+        print(f"X  {response.status_code}  {expected_response}  {url}")
+    else:
+        print(f"   {response.status_code}  {expected_response}  {url}")
+
+
+def run_tests(args):
+
+    unauthenticated = {}
+    authenticated = {'datapool': args.authenticated_cookie}
+    restricted = {'datapool': args.restricted_cookie}
+
+    for test in tests:
+        print('\n' + test['name']),
+        for url in test['urls']:
+            full_url = args.host + url
+            run_test(full_url, unauthenticated, test['unauthenticated_response'])
+            run_test(full_url, authenticated, test['authenticated_response'])
+            run_test(full_url, restricted, test['restricted_response'])
+
+
 def get_args():
     parser = ArgumentParser()
     parser.add_argument('--host', type=str, required=True)
@@ -144,25 +174,6 @@ def get_args():
     parser.add_argument('--restricted_cookie', '-r', type=str, required=True)
     args = parser.parse_args()
     return args
-
-
-def run_tests(args):
-    session = requests.Session()
-
-    unauthenticated = {}
-    authenticated = {'datapool': args.authenticated_cookie}
-    restricted = {'datapool': args.restricted_cookie}
-
-    for test in tests:
-        for url in test['urls']:
-            response = session.get(args.host + url, cookies=unauthenticated, allow_redirects=False)
-            assert(response.status_code == test['unauthenticated_response'])
-
-            response = session.get(args.host + url, cookies=authenticated, allow_redirects=False)
-            assert(response.status_code == test['authenticated_response'])
-
-            response = session.get(args.host + url, cookies=restricted, allow_redirects=False)
-            assert(response.status_code == test['restricted_response'])
 
 
 if __name__ == '__main__':
