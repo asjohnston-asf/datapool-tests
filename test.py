@@ -148,6 +148,24 @@ tests = [
       '/THUMBNAIL/UA/Haywrd_34001_08019-001_10024-003_0672d_s01_L090HH_01.unw_THUMBNAIL.jpg',
     ],
   },
+  {
+    'name': 'static files',
+    'unauthenticated_response': 200,
+    'authenticated_response': 200,
+    'restricted_response': 200,
+    'urls': [
+      '/error_doc/unrestricted/401.html',
+      '/error_doc/restricted/401.html',
+      '/error_doc/sentinel/403.html',
+      '/error_doc/palsar/403.html',
+      '/error_doc/404.html',
+      '/error_doc/409.html',
+      '/error_doc/500.html',
+      '/error_doc/502.html',
+      '/error_doc/503.html',
+      '/favicon.ico',
+    ],
+  },
 ]
 
 
