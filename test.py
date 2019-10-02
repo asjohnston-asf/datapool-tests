@@ -156,7 +156,9 @@ tests = [
     'urls': [
       '/error_doc/unrestricted/401.html',
       '/error_doc/restricted/401.html',
+      '/error_doc/sentinel/401.html',
       '/error_doc/sentinel/403.html',
+      '/error_doc/palsar/401.html',
       '/error_doc/palsar/403.html',
       '/error_doc/404.html',
       '/error_doc/409.html',
