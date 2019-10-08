@@ -5,22 +5,22 @@ import requests
 tests = [
   {
     'name': 'forbidden data',
-    'unauthenticated_response': 403,
+    'unauthenticated_response': 302,
     'authenticated_response': 403,
     'restricted_response': 403,
     'urls': [
       '/',
-      '//archive/datasets/rgps/data/Lagrangian/Winter_1996-1997/TP/w96_nov_TP.bin.zip',
-      '/archive/datasets/rgps/data/Eulerian/2010_12/cenarc_1012.h5.zip',
     ],
   },
   {
     'name': 'non-existent data',
-    'unauthenticated_response': 404,
+    'unauthenticated_response': 302,
     'authenticated_response': 404,
     'restricted_response': 404,
     'urls': [
       '/foo/bar/hello.zip',
+      '//archive/datasets/rgps/data/Lagrangian/Winter_1996-1997/TP/w96_nov_TP.bin.zip',
+      '/archive/datasets/rgps/data/Eulerian/2010_12/cenarc_1012.h5.zip',
     ],
   },
   {
