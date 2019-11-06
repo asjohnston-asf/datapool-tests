@@ -178,8 +178,8 @@ def run_test(url, cookie, expected_response):
 def run_tests(args):
 
     unauthenticated = {}
-    authenticated = {'datapool': args.authenticated_cookie}
-    restricted = {'datapool': args.restricted_cookie}
+    authenticated = {'asf-urs': args.authenticated_cookie}
+    restricted = {'asf-urs': args.restricted_cookie}
 
     for test in tests:
         print('\n' + test['name']),
