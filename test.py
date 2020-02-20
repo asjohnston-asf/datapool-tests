@@ -26,7 +26,7 @@ tests = [
   {
     'name': 'restricted data',
     'unauthenticated_response': 302,
-    'authenticated_response': 401,
+    'authenticated_response': 403,
     'restricted_response': 307,
     'urls': [
       '/L0/J1/J1_01493_STD_L0_F303.zip',
@@ -155,7 +155,7 @@ tests = [
     'restricted_response': 200,
     'urls': [
       '/error_doc/file_not_found.html',
-      '/error_doc/unauthorized.html',
+      '/error_doc/forbidden.html',
       '/error_doc/data_temporarily_unavailable.html',
       '/error_doc/internal_server_error.html',
       '/error_doc/css/bootstrap.min.css',
